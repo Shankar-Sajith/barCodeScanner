@@ -1,21 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import {  View } from 'react-native';
+import { createAppContainer} from 'react-navigation'; 
+import {createBottomTabNavigator} from 'react-navigation-tabs'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+// You can import from local files
+
+import TransactionScreen from './screens/BookTransactionScreen';
+import SearchScreen from './screens/SearchScreen';
+
+// or any pure javascript modules available in npm
+//import { Card } from 'react-native-paper';
+
+export default class App extends Component {
+  render() {
+    return (
+      <View style={{flex:1}}>
+        <Appcontainer />
+      </View>
+    )
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+var TabNavigator = createBottomTabNavigator({
+  TransactionScreen  :{screen:TransactionScreen} ,
+  SearchScreen : {screen:SearchScreen} 
+})
+const Appcontainer = createAppContainer(TabNavigator)
