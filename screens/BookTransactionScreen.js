@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet,TextInput,Image} from 'react-native';
 import *as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner'
 export default class TransactionScreen extends Component {
@@ -8,29 +8,31 @@ export default class TransactionScreen extends Component {
     this.state = {
       hasCameraPermissions: null,
       scanned: false,
-      scannedData: '',
+      scannedBookID:'',
+      scannedStudentID:'',
       buttonState: 'normal',
     }
   }
-  GetCameraPermission = async () => {
+  GetCameraPermission = async (id) => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({
       hasCameraPermissions: status === 'granted',
-      buttonState: "clicked",
+      buttonState: id,
+      scanned:false,
     })
   }
   handelBarCodeScanned = async ({ type, data }) => {
     this.setState({
       scanned: true,
       scannedData: data,
-      buttonState: normal
+      buttonState: normal,
     })
   }
   render() {
     const hasCameraPermissions = this.state.hasCameraPermissions
     const scanned = this.state.scanned;
     const buttonState = this.state.buttonState
-    if (buttonState === "clicked" && hasCameraPermissions) {
+    if (buttonState !== "normal" && hasCameraPermissions) {
       return (
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : this.handelBarCodeScanned}
@@ -41,12 +43,26 @@ export default class TransactionScreen extends Component {
     else if (buttonState === "normal") {
       return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <Text style={styles.displayText}>
-            {hasCameraPermissions===true?this.state.scannedData:"request camera permissions"}
-        </Text>
-          <TouchableOpacity style={styles.scanButton} onPress={this.GetCameraPermission}>
-            <Text style={styles.buttonText}>scan QR code</Text>
-          </TouchableOpacity>
+          <View>
+            <Image source={require("../assets/assets/booklogo.jpg")} style={{width:200,height:200}}/>
+            <Text style={{textAlign:'center',fontSize:30}}>WI-LY</Text>
+          </View>
+          <View style ={styles.inputView}>
+            <TextInput style={styles.inputBox} placeholder="BookID" value={this.state.scannedBookID}/>
+            <TouchableOpacity style={styles.scanButton} onPress={()=>{
+              this.GetCameraPermission("BookID")
+            }}>
+              <Text style = {styles.buttonText}>Scan</Text>
+            </TouchableOpacity>
+          </View>
+          <View style ={styles.inputView}>
+            <TextInput style={styles.inputBox} placeholder="StudentID" value={this.state.scannedStudentID}/>
+            <TouchableOpacity style={styles.scanButton} onPress={()=>{
+              this.GetCameraPermission("StudentID")
+            }}>
+              <Text style = {styles.buttonText}>Scan</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
       )
@@ -59,12 +75,25 @@ const styles = StyleSheet.create({
     textDecorationLine: "underLine",
   },
   scanButton: {
-    backgroundColor: "#2196f3",
-    padding: 10,
-    margin: 10,
+    backgroundColor: "#66bb6a",
+    width:50,
+    borderWidth:1.56,
+    borderLeftWidth:0
   },
   buttonText: {
     fontSize: 20,
-  }
-
+    textAlign:'center',
+    marginTop:10,
+  },
+  inputView:{
+    flexDirection:'row',
+    margine:20,
+  },
+  inputBox:{
+    width:200,
+    height:40,
+    borderWidth:1.5,
+    borderRightWidth:0,
+    fontSize:20,
+  },
 })
