@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 
 // You can import from local files
 
-import TransactionScreen from './screens/BookTransactionScreen';
-import SearchScreen from './screens/SearchScreen';
+import TransactionScreen from './screens/BookTransactionScreen .js';
+import SearchScreen from './screens/SearchScreen.js';
 
 // or any pure javascript modules available in npm
 //import { Card } from 'react-native-paper';
