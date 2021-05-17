@@ -226,7 +226,7 @@ render() {
 const styles = StyleSheet.create({
   displayText: {
     fontSize: 15,
-    textDecorationLine: "underLine",
+    textDecorationLine: "underline",
   },
   scanButton: {
     backgroundColor: "#66bb6a",
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   },
   inputView: {
     flexDirection: 'row',
-    margine: 20,
+    margin: 20,
   },
   inputBox: {
     width: 200,
