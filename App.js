@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View,Image } from 'react-native';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer,createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 
 // You can import from local files
 
 import TransactionScreen from './screens/BookTransactionScreen .js';
 import SearchScreen from './screens/SearchScreen.js';
+import LoginScreen from './screens/LoginScreen.js';
 
 // or any pure javascript modules available in npm
 //import { Card } from 'react-native-paper';
@@ -43,4 +44,8 @@ var TabNavigator = createBottomTabNavigator({
     })
   }
 )
-const Appcontainer = createAppContainer(TabNavigator)
+const switchNavigator = createSwitchNavigator({
+  LoginScreen:{screen:LoginScreen},
+  TabNavigator:{screen:TabNavigator}
+})
+const Appcontainer = createAppContainer(switchNavigator)
